@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyTellusBackend.Data;
 
@@ -10,9 +11,10 @@ using TastyTellusBackend.Data;
 namespace TastyTellusBackend.Migrations
 {
     [DbContext(typeof(TastyTellusBackendContext))]
-    partial class TastyTellusBackendContextModelSnapshot : ModelSnapshot
+    [Migration("20221111125317_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

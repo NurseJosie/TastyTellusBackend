@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TastyTellusBackend.Data;
 using TastyTellusBackend.Model;
@@ -21,88 +16,70 @@ namespace TastyTellusBackend.Controllers
             _context = context;
         }
 
-        // GET: api/Recipes
+        // GET ALL
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipe()
+        public async Task<ActionResult<List<Recipe>>> GetRecipe()
         {
-            return await _context.Recipe.ToListAsync();
+            return Ok(await _context.Recipes.ToListAsync());
         }
 
-        // GET: api/Recipes/5
+        // GET ONE BY ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Recipe>> GetRecipe(int id)
         {
-            var recipe = await _context.Recipe.FindAsync(id);
-
+            var recipe = await _context.Recipes.FindAsync(id);
             if (recipe == null)
             {
-                return NotFound();
+                return BadRequest("Recipe not found.");
             }
-
-            return recipe;
+            return Ok(recipe);
         }
 
-        // PUT: api/Recipes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecipe(int id, Recipe recipe)
-        {
-            if (id != recipe.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(recipe).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RecipeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Recipes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST, CREATE NEW
         [HttpPost]
-        public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
+        public async Task<ActionResult<List<Recipe>>> AddRecipe(Recipe recipe)
         {
-            _context.Recipe.Add(recipe);
+            _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRecipe", new { id = recipe.Id }, recipe);
+            return Ok(await _context.Recipes.ToListAsync());
         }
 
-        // DELETE: api/Recipes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRecipe(int id)
+        // PUT, UPDATE
+        [HttpPut]
+        public async Task<ActionResult<List<Recipe>>> UpdateRecipe(Recipe request)
         {
-            var recipe = await _context.Recipe.FindAsync(id);
-            if (recipe == null)
+            var dbRecipe = await _context.Recipes.FindAsync(request.Id);
+            if (dbRecipe == null)
             {
-                return NotFound();
+                return BadRequest("Recipe not found.");
             }
+            dbRecipe.Title = request.Title;
+            dbRecipe.ImageURL = request.ImageURL;
+            dbRecipe.Intro = request.Intro;
+            dbRecipe.Ingredients = request.Ingredients;
+            dbRecipe.Instructions = request.Instructions;
+            dbRecipe.SourceURL = request.SourceURL;
+            // lägg till mer?
 
-            _context.Recipe.Remove(recipe);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(await _context.Recipes.ToListAsync());
         }
 
-        private bool RecipeExists(int id)
+        // DELETE
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<Recipe>>> DeleteRecipe(int id)
         {
-            return _context.Recipe.Any(e => e.Id == id);
+            var dbRecipe = await _context.Recipes.FindAsync(id);
+            if (dbRecipe == null)
+            {
+                return BadRequest("Recipe not found.");
+            }
+            _context.Recipes.Remove(dbRecipe);
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.Recipes.ToListAsync());
         }
     }
 }
