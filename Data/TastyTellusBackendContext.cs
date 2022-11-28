@@ -13,5 +13,6 @@ namespace TastyTellusBackend.Data
         public DbSet<TastyTellusBackend.Models.User> Users { get; set; }
         public DbSet<TastyTellusBackend.Models.Ingredient> Ingredients { get; set; }
         public DbSet<TastyTellusBackend.Models.InstructionStep> InstructionSteps { get; set; }
+        public DbSet<TastyTellusBackend.Models.Like> Likes { get; set; }
     }
 }

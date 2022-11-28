@@ -12,6 +12,7 @@ namespace TastyTellusBackend.DTOs
         public List<string> Ingredients { get; set; }
         public List<string> Instructions { get; set; }
         public string SourceURL { get; set; }
+        public int Likes { get; set; }
 
         public RecipeDTO(Recipe recipe)
         {
@@ -28,6 +29,9 @@ namespace TastyTellusBackend.DTOs
             Instructions = recipe.Instructions.Select(x => x.Instruction).ToList();
 
             SourceURL = recipe.SourceURL;
+
+            Likes = recipe?.Likes?.Count() ?? 0; // vill visa antal likes
+
         }
     }
 

@@ -8,8 +8,12 @@ namespace TastyTellusBackend.DTOs
         public Guid Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
-        //public string Password { get; set; } //skicka ej med password till frontend?
-        //public bool IsAdmin { get; set; } = false; // skicka med?
+        public List<string>? LikedRecipes { get; set; }
+        public bool IsAdmin { get; set; } = false; 
+        
+        public bool IsSignedIn { get; set; } = false;
+
+
 
         public UserDTO(User user)
         {
@@ -18,6 +22,12 @@ namespace TastyTellusBackend.DTOs
             Username = user.Username;
 
             Email = user.Email;
+
+            LikedRecipes = user?.LikedRecipes?.Select(x => x.Recipe.Title).ToList() ?? new List<string>(); // visa endast receptnamn
+
+            IsAdmin = user.IsAdmin;
+
+            IsSignedIn = user.IsSignedIn;
         }
     }
 }
