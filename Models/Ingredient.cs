@@ -5,6 +5,5 @@
         public Guid Id { get; set; }
         public string IngredientAmount { get; set; }
         public string IngredientName { get; set; }
-
     }
 }

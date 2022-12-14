@@ -75,12 +75,14 @@ namespace TastyTellusBackend.Controllers
 
             //https://stackoverflow.com/questions/21592596/update-multiple-rows-in-entity-framework-from-a-list-of-ids
 
-            dbRecipe.Ingredients.Where(x => request.Ingredients.Contains(x)).ToList().ForEach(y => {
+            dbRecipe.Ingredients.Where(x => request.Ingredients.Contains(x)).ToList().ForEach(y =>
+            {
                 y.IngredientName = y.IngredientName = request.Ingredients.Find(z => z.Id == y.Id)?.IngredientName ?? y.IngredientName;
                 y.IngredientAmount = y.IngredientAmount = request.Ingredients.Find(z => z.Id == y.Id)?.IngredientAmount ?? y.IngredientAmount;
             });
 
-            dbRecipe.Instructions.Where(x => request.Instructions.Contains(x)).ToList().ForEach(y => {
+            dbRecipe.Instructions.Where(x => request.Instructions.Contains(x)).ToList().ForEach(y =>
+            {
                 y.Instruction = y.Instruction = request.Instructions.Find(z => z.Id == y.Id)?.Instruction ?? y.Instruction;
             });
 
@@ -160,8 +162,5 @@ namespace TastyTellusBackend.Controllers
 
         //    //visa antal likes på ett recept (redan klart?)
         //}
-
-
-
     }
 }

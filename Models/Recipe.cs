@@ -1,6 +1,4 @@
-﻿using TastyTellusBackend.Models;
-
-namespace TastyTellusBackend.Models
+﻿namespace TastyTellusBackend.Models
 {
     public class Recipe
     {

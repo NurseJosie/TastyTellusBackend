@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TastyTellusBackend.Data;
-using TastyTellusBackend.Models;
 using TastyTellusBackend.DTOs;
+using TastyTellusBackend.Models;
 
 namespace TastyTellusBackend.Controllers
 {
@@ -22,7 +22,7 @@ namespace TastyTellusBackend.Controllers
         public async Task<ActionResult<List<UserDTO>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
-            return Ok(users.Select(x => new UserDTO(x)).ToList()); 
+            return Ok(users.Select(x => new UserDTO(x)).ToList());
         }
 
         // GET ONE BY ID
@@ -43,7 +43,7 @@ namespace TastyTellusBackend.Controllers
 
         // POST, CREATE NEW
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> AddUser(User userInput)
+        public async Task<ActionResult<UserDTO>> AddUser([FromBody] User userInput)
         {
             if (userInput == null)
             {
@@ -55,21 +55,20 @@ namespace TastyTellusBackend.Controllers
                 Username = userInput.Username,
                 Email = userInput.Email,
                 Password = userInput.Password,
-                IsSignedIn = userInput.IsSignedIn,
                 IsAdmin = userInput.IsAdmin,
             };
 
-            _context.Users.Add(user); 
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             return Ok(new UserDTO(user));
 
-            // TODO: checka att username är unikt. 
+            // TODO: checka att username är unikt.
         }
 
         // PUT, UPDATE
         [HttpPut]
-        public async Task<ActionResult<UserDTO>> UpdateUser(User request) 
+        public async Task<ActionResult<UserDTO>> UpdateUser(User request)
         {
             var dbUser = await _context.Users.FindAsync(request.Id);
             if (dbUser == null)
@@ -78,7 +77,7 @@ namespace TastyTellusBackend.Controllers
             }
             dbUser.Username = request.Username;
             dbUser.Email = request.Email;
-            dbUser.Password = request.Password; 
+            dbUser.Password = request.Password;
 
             await _context.SaveChangesAsync();
 
@@ -87,7 +86,7 @@ namespace TastyTellusBackend.Controllers
 
         // DELETE
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(Guid id) 
+        public async Task<ActionResult> DeleteUser(Guid id)
         {
             if (id == null)
             {
@@ -119,4 +118,3 @@ namespace TastyTellusBackend.Controllers
         }
     }
 }
-

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TastyTellusBackend.Data;
 using TastyTellusBackend.Models;
 
@@ -46,7 +45,5 @@ namespace TastyTellusBackend.Controllers
 
             return Ok();
         }
-
     }
 }
-

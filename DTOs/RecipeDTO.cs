@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using TastyTellusBackend.Models;
+﻿using TastyTellusBackend.Models;
 
 namespace TastyTellusBackend.DTOs
 {
@@ -24,16 +23,13 @@ namespace TastyTellusBackend.DTOs
 
             Intro = recipe.Intro;
 
-            Ingredients = recipe.Ingredients.Select(x => x.IngredientAmount + " " + x.IngredientName).ToList(); 
+            Ingredients = recipe.Ingredients.Select(x => x.IngredientAmount + " " + x.IngredientName).ToList();
 
             Instructions = recipe.Instructions.Select(x => x.Instruction).ToList();
 
             SourceURL = recipe.SourceURL;
 
             Likes = recipe?.Likes?.Count() ?? 0; // vill visa antal likes
-
         }
     }
-
-    
 }
