@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TastyTellusBackend.Data;
 
-// tim corey https://www.youtube.com/watch?v=rhydGmLxfjQ
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TastyTellusBackendContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TastyTellusBackendContext") ?? throw new InvalidOperationException("Connection string 'TastyTellusBackendContext' not found.")));

@@ -29,7 +29,7 @@ namespace TastyTellusBackend.DTOs
 
             SourceURL = recipe.SourceURL;
 
-            Likes = recipe?.Likes?.Count() ?? 0; // vill visa antal likes
+            Likes = recipe?.Likes?.Count() ?? 0;
         }
     }
 }

@@ -73,8 +73,6 @@ namespace TastyTellusBackend.Controllers
             dbRecipe.Intro = request.Intro;
             dbRecipe.SourceURL = request.SourceURL;
 
-            //https://stackoverflow.com/questions/21592596/update-multiple-rows-in-entity-framework-from-a-list-of-ids
-
             dbRecipe.Ingredients.Where(x => request.Ingredients.Contains(x)).ToList().ForEach(y =>
             {
                 y.IngredientName = y.IngredientName = request.Ingredients.Find(z => z.Id == y.Id)?.IngredientName ?? y.IngredientName;
@@ -126,41 +124,10 @@ namespace TastyTellusBackend.Controllers
                 .Include(x => x.Ingredients)
                 .Include(y => y.Instructions)
                 .Where(x => x.Title.Contains(searchInput) || x.Ingredients.Any(y => y.IngredientName.Contains(searchInput)))
+                .Select(x => new RecipeDTO(x))
                 .ToListAsync();
 
             return Ok(result);
         }
-
-        // BEHÖVS INTE? ta bort ---------------------------------------------------------------------------------------------------------------------------------------------------------
-
-        //// GET ALL RECIPES LIKED BY USER
-        //[HttpGet("LikedRecipes")]
-        //public async Task<ActionResult<List<string>>> GetLikedRecipes(Guid userId)
-        //{
-        //    if (userId == null)
-        //    {
-        //        return BadRequest("User id required.");
-        //    }
-
-        //    var dbUser = await _context.Users.FindAsync(userId);
-        //    if (dbUser == null)
-        //    {
-        //        return BadRequest("User not found.");
-        //    }
-
-        //    return Ok(dbUser?.LikedRecipes?.Select(x => x.Recipe.Title).ToList() ?? new List<string>());
-
-        //    // lista alla receptnamn som en spec. user har likat (redan klart?)
-        //    // lista specifik användares likade recept-titlar, likedRecipes
-        //}
-
-        //// GET NUMBER OF LIKES
-        //[HttpGet]
-        //public async Task<ActionResult<List<Like>>> GetLikes()
-        //{
-        //    return Ok(await _context.Likes.ToListAsync());
-
-        //    //visa antal likes på ett recept (redan klart?)
-        //}
     }
 }

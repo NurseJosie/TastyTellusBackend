@@ -18,7 +18,7 @@ namespace TastyTellusBackend.DTOs
 
             Email = user.Email;
 
-            LikedRecipes = user?.LikedRecipes?.Select(x => x.Recipe.Title).ToList() ?? new List<string>(); // visa endast receptnamn
+            LikedRecipes = user?.LikedRecipes?.Select(x => x.Recipe.Title).ToList() ?? new List<string>();
 
             IsAdmin = user.IsAdmin;
         }

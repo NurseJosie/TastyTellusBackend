@@ -63,7 +63,7 @@ namespace TastyTellusBackend.Controllers
 
             return Ok(new UserDTO(user));
 
-            // TODO: checka att username är unikt.
+            // TODO: check that username is unique
         }
 
         // PUT, UPDATE
@@ -105,7 +105,7 @@ namespace TastyTellusBackend.Controllers
         }
 
         //LOG IN
-        [HttpPut("LogIn")]
+        [HttpPost("LogIn")]
         public async Task<ActionResult> LogIn(User userLogin)
         {
             var user = await _context.Users.Where(o => o.Username.ToLower() == userLogin.Username.ToLower() && o.Password == userLogin.Password).FirstOrDefaultAsync();
